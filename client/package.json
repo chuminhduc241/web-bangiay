@@ -70,5 +70,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://immense-hamlet-76522.herokuapp.com/api"
+  "proxy": "http://localhost:5000//api"
 }

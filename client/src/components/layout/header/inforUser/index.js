@@ -55,7 +55,7 @@ const InforUser = () => {
   return (
     <div className="profile">
       <div className="avatar-user">
-        <img src={user.avatar} alt="" onClick={() => setVisible(true)} />
+        <img src={user?.avatar} alt="" onClick={() => setVisible(true)} />
       </div>
       <div className="group-information1">
         <Drawer

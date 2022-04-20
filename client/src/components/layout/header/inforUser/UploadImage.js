@@ -51,7 +51,7 @@ const UploadImage = ({ avatar, name, callBackAvatar }) => {
   const urlavatar = () => {
     if (image) return image;
     else if (avatar) return avatar;
-    else return "";
+    else return "https://picsum.photos/seed/picsum/200/300";
   };
 
   return (
