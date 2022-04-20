@@ -11,7 +11,7 @@ import FormItem from "antd/lib/form/FormItem";
 import { LOCAL_STORAGE } from "constants/localstorage";
 import moment from "moment";
 import "moment/locale/vi";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getUser, logOut } from "redux/authSlice";
@@ -33,7 +33,13 @@ const InforUser = () => {
     dispatch(logOut());
     localStorage.removeItem(LOCAL_STORAGE.ACCESS_TOKEN);
   };
-
+  useEffect(() => {
+    const getInfor = async () => {
+      const res = await userServices.getInfo();
+      dispatch(getUser({ user: res, isAdmin: res.role === 1 ? true : false }));
+    };
+    getInfor();
+  }, []);
   const handleUpdateName = async (value) => {
     setName(value.name);
     setIsNameUpdate(false);

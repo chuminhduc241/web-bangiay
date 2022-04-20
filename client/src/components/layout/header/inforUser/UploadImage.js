@@ -48,10 +48,15 @@ const UploadImage = ({ avatar, name, callBackAvatar }) => {
     }
     return isJpgOrPng && isLt2M;
   };
+  const urlavatar = () => {
+    if (image) return image;
+    else if (avatar) return avatar;
+    else return "";
+  };
 
   return (
     <div className="group-avatar">
-      <Image src={image ? image : avatar} />
+      <Image src={urlavatar()} />
       <div className="group-upload-image">
         <ImgCrop
           modalOk="Cập Nhật"
