@@ -5,9 +5,9 @@ import "./style.scss";
 const Footer = () => {
   return (
     <footer className="footer">
-      <div className="container">
+      <div className="container grid wide">
         <div className="row">
-          <div className="footer-col col-xl-3">
+          <div className="footer-col l-3">
             <h4>company</h4>
             <ul className="list-unstyled">
               <li>
@@ -24,7 +24,7 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          <div className="footer-col col-xl-3">
+          <div className="footer-col l-3">
             <h4>get help</h4>
             <ul className="list-unstyled">
               <li>
@@ -44,7 +44,7 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          <div className="footer-col col-xl-3">
+          <div className="footer-col l-3">
             <h4>online shop</h4>
             <ul className="list-unstyled">
               <li>
@@ -61,7 +61,7 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          <div className="footer-col col-xl-3">
+          <div className="footer-col l-3">
             <h4>follow us</h4>
             <div className="social-links">
               <Link to="#">
