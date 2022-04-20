@@ -1,0 +1,57 @@
+.page_customer_account {
+    .title-head {
+      margin-bottom: 10px;
+      a {
+        text-transform: uppercase;
+        font-size: 18px;
+        color: #444;
+      }
+    }
+    .name-account {
+      margin-bottom: 15px;
+      a {
+        color: #333;
+      }
+    }
+    .table-cart {
+      width: 100%;
+      max-width: 100%;
+      margin-bottom: 20px;
+    }
+    .block-account {
+      .block-title-account {
+        h5 {
+          margin: 10px 0;
+          text-transform: uppercase;
+          color: #333;
+          font-size: 18px;
+        }
+      }
+      .block-content {
+        p {
+          margin-bottom: 15px;
+          a {
+            height: 40px;
+            line-height: 39px;
+            padding: 0 20px;
+            text-align: center;
+            white-space: nowrap;
+            outline: none !important;
+            color: #fff;
+            background: var(--green-color);
+            border: 1px solid var(--green-color);
+            display: block;
+            width: 100%;
+            border-radius: 3px;
+            font-size: 14px;
+            font-family: "Roboto", "HelveticaNeue", "Helvetica Neue", sans-serif;
+            &:hover {
+              color: var(--green-color);
+              background: #fff;
+            }
+          }
+        }
+      }
+    }
+  }
+  

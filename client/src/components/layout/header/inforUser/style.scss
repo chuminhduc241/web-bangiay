@@ -1,0 +1,75 @@
+.group-information {
+  display: flex;
+  align-items: center;
+  // display: flex;
+  // align-items: center;
+  // .information-name {
+  //   display: flex;
+  //   align-items: center;;
+  margin-top: 20px;
+  // }
+  width: 100%;
+  .icon-user-information {
+    font-size: 16px;
+    min-width: 30px;
+  }
+  &-content {
+    font-size: 16px;
+    padding-right: 24px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    justify-content: space-between;
+    a {
+      color: black;
+      font-size: 16px;
+    }
+  }
+  .btn-logout {
+    color: #ec1839;
+  }
+  .logout {
+    background: none;
+    outline: none;
+    border: none;
+    color: #ec1839;
+  }
+}
+.change-information {
+  margin-top: 20px;
+}
+
+.information .group-avatar {
+  text-align: center;
+}
+.information .group-avatar img {
+  border-radius: 50%;
+  height: 220px;
+  width: 220px;
+  box-shadow: 0 0 1px 0 rgba(198, 218, 239, 0.06),
+    0 16px 16px -1px rgba(8, 11, 14, 0.1);
+  border: 1px solid #f7f8f9;
+}
+.create-account {
+  text-align: center;
+  span {
+    color: rgba(153, 153, 153, 0.4);
+    font-weight: 400;
+    font-size: 1em;
+    padding: 5px 2px;
+    text-transform: capitalize;
+  }
+}
+.group-upload-image {
+  margin: 20px auto;
+}
+.avatar-user {
+  width: 30px;
+  height: 30px;
+}
+.avatar-user img {
+  width: 100%;
+  border-radius: 50%;
+  display: block;
+}

@@ -1,0 +1,38 @@
+.product__NSX {
+  &-title {
+    margin-top: 40px;
+    padding: 20px 0;
+  }
+  .filter-price {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+.pagination {
+  margin: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination button {
+  border: none;
+  outline: none;
+  background: transparent;
+  border-radius: 5px;
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.pagination button.active {
+  background-color: crimson;
+  color: white;
+}
+
+.pagination button:hover:not(.active) {
+  background-color: #ddd;
+}

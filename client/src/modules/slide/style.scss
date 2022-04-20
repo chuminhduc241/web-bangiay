@@ -1,0 +1,50 @@
+.slider {
+  position: relative;
+  .title-slider {
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 100;
+    transform: translate(-50%, -50%);
+    .text {
+      display: block;
+      text-transform: uppercase;
+      font-weight: 800;
+      font-size: 85px;
+      text-align: center;
+      animation: fadeIn 1.5s;
+    }
+    .text-2 {
+      color: rgb(249, 172, 0);
+      text-align: 102px;
+    }
+  }
+  .css-y5i8f7 {
+    height: 100vh;
+    object-fit: cover;
+  }
+  .css-rh92k-MuiPaper-root-MuiMobileStepper-root {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 40px;
+    background: none;
+    z-index: 10;
+    .MuiMobileStepper-dot {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+    transform: rotateY(360deg);
+  }
+}
