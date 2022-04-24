@@ -1,9 +1,10 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 // API
 // component
 import "./style.scss";
+import { CategoryService } from "services/category-service";
 export default function Menu({ openMenu, setOpenMenu }) {
   const onClickCloseMenu = () => {
     setOpenMenu(false);
@@ -13,7 +14,15 @@ export default function Menu({ openMenu, setOpenMenu }) {
       ? document.querySelector("body").classList.add("active")
       : document.querySelector("body").classList.remove("active");
   }
-
+  const [category, setCategory] = useState([]);
+  const categoryServier = new CategoryService();
+  useEffect(() => {
+    const getCategory = async () => {
+      const res = await categoryServier.getCategory();
+      setCategory(res);
+    };
+    getCategory();
+  });
   return (
     <>
       <div className={`ground-menu ${openMenu && "open"}`}>
@@ -24,15 +33,19 @@ export default function Menu({ openMenu, setOpenMenu }) {
                 trang chủ
               </Link>
             </li>
-            <li className="active-menu" style={{ "--i": "2" }}>
-              <Link to={`/product-type/?Adidas`}>
-                <div className="icon-menu">
-                  {/* <img src="" alt="logoAdidas" /> */}
-                </div>
-                Adidas
-                <i className="fa fa-caret-down" />
-              </Link>
-            </li>
+            {category.length !== 0
+              ? category.map((item) => (
+                  <li className="active-menu" style={{ "--i": "2" }}>
+                    <Link to={`/product-type/?Adidas`}>
+                      <div className="icon-menu">
+                        <img src={item.image} alt="logoAdidas" />
+                      </div>
+                      {item.name}
+                      <i className="fa fa-caret-down" />
+                    </Link>
+                  </li>
+                ))
+              : ""}
           </ul>
         </nav>
         );
