@@ -44,7 +44,7 @@ class APIfeatures {
 
   paginating() {
     const page = this.queryString.page * 1 || 1;
-    const limit = this.queryString.limit * 1 || 2;
+    const limit = this.queryString.limit * 1 || 10;
     const skip = (page - 1) * limit;
     this.query = this.query.skip(skip).limit(limit);
     return this;
@@ -86,10 +86,6 @@ const productCtrl = {
     });
   },
   createProduct: async (req, res) => {
-    const newdiscout = new discout({
-      discout,
-    });
-    await newdiscout.save();
     try {
       const { name, description, price, sex, color, size, category } = req.body;
       let images = [];
@@ -98,9 +94,7 @@ const productCtrl = {
       } else {
         images = req.body.images;
       }
-
       const imagesLinks = [];
-
       for (let i = 0; i < images.length; i++) {
         const result = await cloudinary.v2.uploader.upload(images[i], {
           folder: "products",
@@ -117,12 +111,11 @@ const productCtrl = {
         sex,
         color,
         size,
-        stock,
         category,
         images: imagesLinks,
       });
       await newProduct.save();
-      return res.status(201).json({
+      return res.status(200).json({
         success: true,
         product: newProduct,
       });

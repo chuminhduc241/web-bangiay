@@ -1,21 +1,29 @@
-import { Rating } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import Breadcrumb from "../BreadCrumb";
-import TabProduct from "../tab-product";
+import React, { useContext, useEffect, useState } from "react";
 import Slider from "react-slick";
 import "./style.scss";
-import { Image } from "antd";
+import { Image, Rate, Tabs } from "antd";
 import { useParams } from "react-router-dom";
 import { ProductService } from "services/product-service";
 import { useDispatch } from "react-redux";
 import { addCart } from "redux/cartSlice";
 import popup from "components/common/Popup/index";
+import Reviews from "./Reviews";
+import { DataContext } from "DataProvider";
+
 const Detail = () => {
+  const { TabPane } = Tabs;
   const { id } = useParams();
   console.log(id);
   const [product, setProduct] = useState();
+  const [comments, setComments] = useState([]);
+  const { socket } = useContext(DataContext);
   const productService = new ProductService();
   const dispatch = useDispatch();
+  useEffect(() => {
+    if (socket) {
+      socket.emit("joinRoom", id);
+    }
+  }, [socket, id]);
   useEffect(() => {
     const getProduct = async () => {
       const res = await productService.getProductById({ id: id });
@@ -23,6 +31,14 @@ const Detail = () => {
     };
     getProduct();
   }, [id]);
+  useEffect(() => {
+    const getcomment = async () => {
+      const res = await productService.getComments();
+      setComments(res.comments);
+    };
+    getcomment();
+  }, [id]);
+  console.log(comments);
   const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
     <button
       {...props}
@@ -74,14 +90,14 @@ const Detail = () => {
     if (numReviews > 0) {
       return (
         <>
-          <Rating name="read-only" defaultValue={rate} readOnly />
+          <Rate value={rate} readOnly />
           <span className="total-review">có {numReviews} Đánh giá</span>
         </>
       );
     } else {
       return (
         <>
-          <Rating name="read-only" defaultValue={5} readOnly />
+          <Rate value={5} readOnly />
           <span className="total-review">chưa có đánh giá</span>
         </>
       );
@@ -139,9 +155,6 @@ const Detail = () => {
   };
   return (
     <>
-      <div className="grid wide pt-2 pb-2 mb-4 border-bottom">
-        <Breadcrumb />
-      </div>
       <section className="detail-products grid wide">
         <div className="row">
           <div className="product-images col l-5">
@@ -226,7 +239,19 @@ const Detail = () => {
         </div>
         <div className="row mt-4 mb-4">
           <div className="col c-12">
-            <TabProduct product={product} />
+            <Tabs defaultActiveKey="1">
+              <TabPane tab="Miêu tả" key="1">
+                {product?.description}
+              </TabPane>
+              <TabPane tab="Đánh giá" key="2">
+                <Reviews
+                  id={id}
+                  comments={comments}
+                  socket={socket}
+                  setComments={setComments}
+                />
+              </TabPane>
+            </Tabs>
           </div>
         </div>
       </section>

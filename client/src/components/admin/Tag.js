@@ -6,7 +6,8 @@ const Tags = ({ form }) => {
   console.log(form);
   const [inputVisible, setInputVisible] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  const [tags, setTags] = useState(["tag1", "tag2"]);
+  const [tags, setTags] = useState([]);
+  const [input, setInput] = useState();
   const inputRef = useRef();
   const handleClose = (removeTag) => {
     const tagss = tags.filter((tag) => tag !== removeTag);
@@ -28,6 +29,9 @@ const Tags = ({ form }) => {
   const showInput = () => {
     setInputVisible(true);
     inputRef.current.focus();
+  };
+  const saveInputRef = (input) => {
+    setInput(input);
   };
 
   const forMap = (tag) => {

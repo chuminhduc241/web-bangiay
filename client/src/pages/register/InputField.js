@@ -1,15 +1,13 @@
 import React from "react";
-import { FormGroup, FormFeedback } from "reactstrap";
 import { ErrorMessage } from "formik";
 import { Input } from "antd";
-import { fontSize } from "@mui/system";
 const InputField = (props) => {
   const { field, label, placeholder, form, type, disabled, min, icon } = props;
   const { name } = field;
   const { errors, touched } = form;
   const showError = errors[name] && touched[name];
   return (
-    <FormGroup>
+    <div>
       <label for={name}>{label}</label>
       <Input
         prefix={icon}
@@ -26,7 +24,7 @@ const InputField = (props) => {
           <ErrorMessage name={name} />
         </p>
       )}
-    </FormGroup>
+    </div>
   );
 };
 

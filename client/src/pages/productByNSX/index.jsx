@@ -18,29 +18,28 @@ const ProductByCategory = () => {
     if (!data) return 0;
     return Math.ceil(data.count / limit);
   }, [data, limit]);
+  const localtion = useLocation();
   const productService = new ProductService();
-  useEffect(() => {
-    const getProductByID = async () => {
-      const res = await productService.getProductByCategory({
-        page,
-        limit,
-        sort,
-        category,
-      });
-      console.log(res);
-      setData(res);
-    };
-    getProductByID();
-  }, [page, sort, limit, category]);
+
+  const getProductByID = async () => {
+    const res = await productService.getProductByCategory({
+      page,
+      limit,
+      sort,
+      category,
+    });
+    console.log(res);
+    setData(res);
+  };
   useEffect(() => {
     const page = new URLSearchParams(search).get("page") || 1;
     setPage(page);
     const sort = new URLSearchParams(search).get("sort") || "-createdAt";
     setSort(sort);
-    const category = new URLSearchParams(search).get("category") || "Puma";
+    const category = new URLSearchParams(search).get("category") || "All";
     setCategory(category);
+    getProductByID();
   }, [search]);
-  console.log("render");
   return (
     <div className="product__NSX grid wide">
       <div className="product__NSX-title row">

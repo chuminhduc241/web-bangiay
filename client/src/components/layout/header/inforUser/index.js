@@ -53,134 +53,136 @@ const InforUser = () => {
     getInforUser();
   };
   return (
-    <div className="profile">
-      <div className="avatar-user">
-        <img src={user?.avatar} alt="" onClick={() => setVisible(true)} />
-      </div>
-      <div className="group-information1">
-        <Drawer
-          title="Thông tin"
-          width={400}
-          onClose={() => setVisible(false)}
-          visible={visible}
-          className="container-information"
-        >
-          <div className="information">
-            <UploadImage avatar={user?.avatar} />
-            <div className="create-account">
-              <Tooltip
-                placement="top"
-                title={moment(user?.createdAt).format("LLLL")}
-              >
-                <span>{moment(user?.createdAt).fromNow()}</span>
-              </Tooltip>
-            </div>
-            <div className="ground-information">
-              <div className="group-information">
-                <UserOutlined className="icon-user-information" />
-                <div className="group-information-content">
-                  {!isNameUpdate && (
-                    <>
-                      <span className="information-name">
-                        {name ? name : user?.name}
-                      </span>
-                      <EditOutlined
-                        className="i-edit"
-                        onClick={() => {
-                          setIsNameUpdate(true);
-                        }}
-                      />
-                    </>
-                  )}
-                  {isNameUpdate && (
-                    <Form onFinish={handleUpdateName}>
-                      <FormItem
-                        name="name"
-                        pattern={[/^[a-z0-9]/]}
-                        rules={[
-                          {
-                            required: true,
-                            message: "Nhập đầy đủ tên bạn !",
-                            whitespace: true,
-                            type: "string",
-                          },
-                          {
-                            min: 1,
-                            max: 25,
-                            message: "Vui lòng nhập đúng tên của bạn !",
-                          },
-                        ]}
-                      >
-                        <Input defaultValue={user?.name} />
-                      </FormItem>
-                      <div className="group-edit-user">
-                        <Button
-                          key="back"
-                          onClick={() => setIsNameUpdate(false)}
-                        >
-                          Hủy
-                        </Button>
-                        <Button
-                          type="primary"
-                          htmlType="submit"
-                          className="login-form-button btn-login"
-                          disabled={
-                            !form.isFieldsTouched(true) ||
-                            form
-                              .getFieldsError()
-                              .filter(({ errors }) => errors.length).length
-                          }
-                        >
-                          Cập nhật
-                        </Button>
-                      </div>
-                    </Form>
-                  )}
-                </div>
+    <>
+      <div className="profile">
+        <div className="avatar-user">
+          <img src={user?.avatar} alt="" onClick={() => setVisible(true)} />
+        </div>
+        <div className="group-information1">
+          <Drawer
+            title="Thông tin"
+            width={400}
+            onClose={() => setVisible(false)}
+            visible={visible}
+            className="container-information"
+          >
+            <div className="information">
+              <UploadImage avatar={user?.avatar} />
+              <div className="create-account">
+                <Tooltip
+                  placement="top"
+                  title={moment(user?.createdAt).format("LLLL")}
+                >
+                  <span>{moment(user?.createdAt).fromNow()}</span>
+                </Tooltip>
               </div>
+              <div className="ground-information">
+                <div className="group-information">
+                  <UserOutlined className="icon-user-information" />
+                  <div className="group-information-content">
+                    {!isNameUpdate && (
+                      <>
+                        <span className="information-name">
+                          {name ? name : user?.name}
+                        </span>
+                        <EditOutlined
+                          className="i-edit"
+                          onClick={() => {
+                            setIsNameUpdate(true);
+                          }}
+                        />
+                      </>
+                    )}
+                    {isNameUpdate && (
+                      <Form onFinish={handleUpdateName}>
+                        <FormItem
+                          name="name"
+                          pattern={[/^[a-z0-9]/]}
+                          rules={[
+                            {
+                              required: true,
+                              message: "Nhập đầy đủ tên bạn !",
+                              whitespace: true,
+                              type: "string",
+                            },
+                            {
+                              min: 1,
+                              max: 25,
+                              message: "Vui lòng nhập đúng tên của bạn !",
+                            },
+                          ]}
+                        >
+                          <Input defaultValue={user?.name} />
+                        </FormItem>
+                        <div className="group-edit-user">
+                          <Button
+                            key="back"
+                            onClick={() => setIsNameUpdate(false)}
+                          >
+                            Hủy
+                          </Button>
+                          <Button
+                            type="primary"
+                            htmlType="submit"
+                            className="login-form-button btn-login"
+                            disabled={
+                              !form.isFieldsTouched(true) ||
+                              form
+                                .getFieldsError()
+                                .filter(({ errors }) => errors.length).length
+                            }
+                          >
+                            Cập nhật
+                          </Button>
+                        </div>
+                      </Form>
+                    )}
+                  </div>
+                </div>
 
-              <div className="group-information">
-                <MailOutlined className="icon-user-information" />
-                <div className="group-information-content">
-                  <span>{user?.email}</span>
+                <div className="group-information">
+                  <MailOutlined className="icon-user-information" />
+                  <div className="group-information-content">
+                    <span>{user?.email}</span>
+                  </div>
+                </div>
+                <div className="group-information">
+                  <ShoppingCartOutlined className="icon-user-information" />
+                  <div className="group-information-content">
+                    <Link
+                      onClick={() => {
+                        setVisible(false);
+                      }}
+                      className="inForUser"
+                      to="/history-cart"
+                    >
+                      Lịch sử mua hàng
+                    </Link>
+                  </div>
+                </div>
+                <div className="group-information">
+                  <LoginOutlined className="icon-user-information btn-logout" />
+                  <div className="group-information-content">
+                    <button className="logout" onClick={onLogout}>
+                      Đăng xuất
+                    </button>
+                  </div>
                 </div>
               </div>
-              <div className="group-information">
-                <ShoppingCartOutlined className="icon-user-information" />
-                <div className="group-information-content">
-                  <Link
-                    onClick={() => {
-                      setVisible(false);
-                    }}
-                    className="inForUser"
-                    to="/history-cart"
-                  >
-                    Lịch sử mua hàng
-                  </Link>
-                </div>
-              </div>
-              <div className="group-information">
-                <LoginOutlined className="icon-user-information btn-logout" />
-                <div className="group-information-content">
-                  <button className="logout" onClick={onLogout}>
-                    Đăng xuất
-                  </button>
-                </div>
+              <div className="change-information">
+                <Button
+                  block
+                  type="primary"
+                  onClick={() => setIsInformation(true)}
+                >
+                  Đổi mật khẩu
+                </Button>
               </div>
             </div>
-            <div className="change-information">
-              <Button
-                block
-                type="primary"
-                onClick={() => setIsInformation(true)}
-              >
-                Đổi mật khẩu
-              </Button>
-            </div>
-          </div>
-        </Drawer>
+          </Drawer>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

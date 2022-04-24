@@ -29,7 +29,7 @@ const userCtrl = {
       });
     } catch (error) {
       console.log(error);
-      return res.status(400).json({
+      return res.status(500).json({
         message: error,
       });
     }

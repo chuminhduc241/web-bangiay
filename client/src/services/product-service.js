@@ -5,6 +5,9 @@ export class ProductService extends ServiceBase {
   getProducts = async (params) => {
     return await this.get("/getProducts");
   };
+  getComments = async (params) => {
+    return await this.get("/getComments");
+  };
   getProductById = async (params) => {
     const { id } = params;
     console.log(id);
@@ -15,5 +18,11 @@ export class ProductService extends ServiceBase {
     return await this.get(
       `/getProducts?category=${category}&limit=${limit}&page=${page}&sort=${sort}`
     );
+  };
+  addProduct = async (params) => {
+    const image = params.images;
+    console.log(image);
+
+    return await this.post("/createProduct", { ...params, images: image });
   };
 }

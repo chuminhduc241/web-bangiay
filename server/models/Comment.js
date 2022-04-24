@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
+const { Schema } = mongoose;
 const newComment = mongoose.Schema(
   {
     id_product: { type: String, required: true },
-    id_user: { type: String, required: true },
+    id_user: { type: Schema.Types.ObjectId, ref: "user" },
     content: { type: String, required: true },
     rating: {
       type: Number,

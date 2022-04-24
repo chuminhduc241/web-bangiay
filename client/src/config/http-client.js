@@ -14,7 +14,7 @@ export class HttpClient {
         Accept: "application/json",
         Authorization: "Bearer " + tokenAccess,
       },
-      timeout: 5000,
+      timeout: 50000,
       transformRequest: [
         (data, headers) => {
           if (data instanceof FormData) {

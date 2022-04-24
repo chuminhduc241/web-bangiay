@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Modal,
   Button,
@@ -11,43 +11,57 @@ import {
   Row,
   Col,
   Radio,
+  message,
 } from "antd";
 import Tags from "./Tag";
 import "./style.scss";
 import UploadImages from "./UploadImages";
+import TextArea from "antd/lib/input/TextArea";
+import { CategoryService } from "services/category-service";
+import { ProductService } from "services/product-service";
 const { Option } = Select;
+function getBase64(file) {
+  console.log("file :", file);
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
+}
+const renderBase64 = (fileList) => {
+  let Listimages = [];
+  fileList.forEach((img) => {
+    getBase64(img).then((resultImg) => {
+      console.log(resultImg, "duc dep trai");
+      Listimages = [...Listimages, resultImg];
+    });
+  });
+  console.log("truoc");
+  return Listimages;
+};
+
 const NewProduct = () => {
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState(0);
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
-  const [stock, setStock] = useState(0);
+  const [category, setCategory] = useState([]);
+  const categoryServier = new CategoryService();
+  const productService = new ProductService();
+  const Ref = useRef();
   const [images, setImages] = useState([]);
   const [visible, setVisible] = useState(true);
-  // const [color, setColor] = useState([]);
+  const [fileList, setFileList] = useState([]);
+  const [messError, setMessError] = useState(false);
   const [imagesPreview, setImagesPreview] = useState([]);
-  const handleSubmit = async () => {
-    const newproduct = {
-      name,
-      price: Number(price),
-      description,
-      category,
-      sex: "nam",
-      images,
-      size: [40, 41, 42],
-      color: ["den", "trang"],
+  useEffect(() => {
+    const getCategory = async () => {
+      const res = await categoryServier.getCategory();
+      setCategory(res);
     };
-    console.log(newproduct);
-    const res = await axios.post("/createProduct", newproduct);
-    console.log(res);
-  };
-  const handleCancel = () => {
-    setVisible(false);
-  };
+    getCategory();
+  }, []);
   const createProductImagesChange = (e) => {
     const files = Array.from(e.target.files);
 
-    setImages([]);
+    // setImages([]);
     setImagesPreview([]);
 
     files.forEach((file) => {
@@ -63,8 +77,21 @@ const NewProduct = () => {
       reader.readAsDataURL(file);
     });
   };
-  const handleAdd = (value) => {
+  const handleCancel = () => {
+    setVisible(false);
+  };
+  const handleAdd = async (value) => {
     console.log(value);
+    // let Listimg = await renderBase64(fileList);
+    console.log(fileList + "kk");
+    const newProduct = {
+      ...value,
+      price: Number(value.price),
+      images: imagesPreview,
+    };
+    console.log(newProduct);
+    await productService.addProduct(newProduct);
+    message.success("them thanh cong");
   };
   const sizeOptions = [
     { label: "36", value: 36 },
@@ -77,6 +104,7 @@ const NewProduct = () => {
     { label: "43", value: 43 },
   ];
   const [form] = Form.useForm();
+  console.log(fileList);
   const onChangeCategory = () => {};
   return (
     <div className="new-product">
@@ -84,7 +112,9 @@ const NewProduct = () => {
         width={1200}
         title="Thêm sản phẩm"
         visible={visible}
-        onOk={handleSubmit}
+        onOk={() => {
+          Ref.current.click();
+        }}
         onCancel={handleCancel}
       >
         <Form
@@ -126,12 +156,20 @@ const NewProduct = () => {
                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
               }
             >
-              <Option value="jack">Jack</Option>
-              <Option value="lucy">Lucy</Option>
-              <Option value="tom">Tom</Option>
+              {category?.map((cate) => (
+                <Option key={cate._id} value={cate.name}>
+                  {cate.name}
+                </Option>
+              ))}
             </Select>
           </Form.Item>
-
+          <Form.Item
+            label="Miêu tả"
+            name="description"
+            rules={[{ required: true, message: "Vui lòng nhập giá sản phẩm" }]}
+          >
+            <TextArea rows={4} />
+          </Form.Item>
           <Form.Item
             label="Kích cỡ"
             name="size"
@@ -146,8 +184,10 @@ const NewProduct = () => {
             name="sex"
             rules={[{ required: true, message: "Vui lòng nhập giới tính" }]}
           >
-            <Radio.Group value={"Nam"}>
-              <Radio value="Nam">Nam</Radio>
+            <Radio.Group>
+              <Radio value="Nam" checked>
+                Nam
+              </Radio>
               <Radio value="Nữ">Nữ</Radio>
               <Radio value="unisex">Nam, Nữ</Radio>
             </Radio.Group>
@@ -161,18 +201,41 @@ const NewProduct = () => {
           >
             <Tags form={form} />
           </Form.Item>
+
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Button className="addProduct" type="primary" htmlType="submit">
+            <Button
+              ref={Ref}
+              style={{ display: "none" }}
+              className="addProduct"
+              type="primary"
+              htmlType="submit"
+            >
               Submit
             </Button>
           </Form.Item>
         </Form>
-        <Row justify="">
-          <Col span={8}>Hình ảnh</Col>
-          <Col span={16}>
-            <UploadImages />
-          </Col>
-        </Row>
+        <div className="div">
+          <Row>
+            <Col span={8}>Hinh anh</Col>
+            <Col span={16}>
+              <div id="createProductFormFile">
+                <input
+                  type="file"
+                  name="avatar"
+                  accept="image/*"
+                  onChange={createProductImagesChange}
+                  multiple
+                />
+              </div>
+
+              <div id="createProductFormImage">
+                {imagesPreview.map((image, index) => (
+                  <img key={index} src={image} alt="Product Preview" />
+                ))}
+              </div>
+            </Col>
+          </Row>
+        </div>
       </Modal>
     </div>
   );

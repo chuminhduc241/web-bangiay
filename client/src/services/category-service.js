@@ -6,4 +6,8 @@ export class CategoryService extends ServiceBase {
   getCategory = async () => {
     return await this.get("/category");
   };
+  newCategory = async (params) => {
+    const { image, name, desciption } = params;
+    return await this.post("/category", { image, name, desciption });
+  };
 }

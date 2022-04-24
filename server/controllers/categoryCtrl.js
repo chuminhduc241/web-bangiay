@@ -1,6 +1,11 @@
 const Category = require("../models/Category");
 const Products = require("../models/Product");
-
+const cloudinary = require("cloudinary");
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
 const categoryCtrl = {
   getCategories: async (req, res) => {
     try {
@@ -14,12 +19,18 @@ const categoryCtrl = {
     try {
       // if user have role = 1 ---> admin
       // only admin can create , delete and update category
-      const { name } = req.body;
+      const { name, image, description } = req.body;
       const category = await Category.findOne({ name });
       if (category)
         return res.status(400).json({ msg: "This category already exists." });
-
-      const newCategory = new Category({ name });
+      const result = await cloudinary.v2.uploader.upload(image, {
+        folder: "category",
+      });
+      const newCategory = new Category({
+        name,
+        description,
+        image: result.url,
+      });
 
       await newCategory.save();
       res.json({ msg: "Created a category" });

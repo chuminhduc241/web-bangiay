@@ -1,10 +1,33 @@
+import { DataContext } from "DataProvider";
 import Detail from "modules/detail-product";
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { ProductService } from "services/product-service";
+import Comment from "./comment";
+import InForProduct from "./InforProduct";
 
 const DetailProduct = () => {
+  const [product, setProduct] = useState();
+  const productService = new ProductService();
+  const { socket } = useContext(DataContext);
+  const { id } = useParams();
+  useEffect(() => {
+    if (socket) {
+      socket.emit("joinRoom", id);
+    }
+  }, [socket, id]);
+  useEffect(() => {
+    const getProduct = async () => {
+      const res = await productService.getProductById({ id: id });
+      setProduct(res.product);
+    };
+    getProduct();
+  }, [id]);
+
   return (
     <div>
-      <Detail />
+      <InForProduct product={product} />
+      <Comment socket={socket} product_id={id} />
     </div>
   );
 };

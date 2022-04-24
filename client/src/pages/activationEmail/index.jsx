@@ -19,6 +19,7 @@ const ActivationEmail = () => {
             `Tài khoản đã được xác thực thành công bạn có thể quay trở lại đăng nhập`,
             "success"
           );
+          history.push("/login");
         } catch (err) {
           console.log(err);
           popup("Xác thực", `${err.response.data.msg}`, "error");

@@ -12,42 +12,17 @@ function Products() {
     };
     getProduct();
   }, []);
-  //   const showReview = (rating, numReviews) => {
-  //     const rate = rating / numReviews;
-  //     if (numReviews > 0) {
-  //       return (
-  //         <>
-  //           <StarRatings
-  //             starDimension="16px"
-  //             starRatedColor="#fed330"
-  //             starHoverColor="#fed330"
-  //             rating={rate}
-  //             starEmptyColor="white"
-  //           />
-  //           <p>{numReviews} Đánh giá</p>
-  //         </>
-  //       );
-  //     } else {
-  //       return (
-  //         <>
-  //           <StarRatings
-  //             starDimension="16px"
-  //             starRatedColor="#fed330"
-  //             starHoverColor="#fed330"
-  //             starEmptyColor="none"
-  //             numberOfStars={5}
-  //           />
-  //           <p> Chưa có đánh giá</p>
-  //         </>
-  //       );
-  //     }
-  //   };
+
   return (
     <>
       <div className="products grid wide">
         <div className="row">
           {data.map((product) => (
-            <div className="col l-3 " key={product._id}>
+            <div
+              className="col l-3 "
+              style={{ marginBottom: 16 }}
+              key={product._id}
+            >
               <ProductItem key={product._id} product={product} />
             </div>
           ))}

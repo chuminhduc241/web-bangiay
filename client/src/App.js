@@ -8,6 +8,7 @@ import { persistor, store } from "redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 
 import AppContainer from "AppContainer";
+import DataProvider from "DataProvider";
 function App() {
   return (
     <div className="App">
@@ -15,7 +16,9 @@ function App() {
         <PersistGate loading={null} persistor={persistor}>
           <Router>
             <AppContainer>
-              <AppRoutesComponent />
+              <DataProvider>
+                <AppRoutesComponent />
+              </DataProvider>
             </AppContainer>
           </Router>
         </PersistGate>

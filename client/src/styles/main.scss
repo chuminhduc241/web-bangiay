@@ -3,7 +3,7 @@ body {
   margin: 0;
   line-height: 28px;
   overflow-x: hidden;
-  font-family: "Open Sans", sans-serif;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.42857143;
   color: #333;
@@ -34,10 +34,11 @@ p {
   margin: 0;
   padding: 0;
 }
-input, textarea {
+input,
+textarea {
   outline: none;
 }
-.main-container{
+.main-container {
   min-height: 300px;
 }
 
@@ -135,7 +136,6 @@ input, textarea {
 .justify-content-between {
   justify-content: space-between;
 }
-
 
 @media (max-width: 739px) {
   .hidden-xs {
