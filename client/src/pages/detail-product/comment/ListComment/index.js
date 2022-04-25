@@ -25,7 +25,7 @@ export default function ListComment({ socket, user, product_id }) {
     const getcomment = async () => {
       const res = await productService.getComments({
         product_id,
-        page, 
+        page,
         limit: 3,
       });
       setDataComment(res.comments);
@@ -84,7 +84,7 @@ export default function ListComment({ socket, user, product_id }) {
       {dataComment?.map((item) => (
         <>
           <ItemComment
-            comment={item}
+            item={item}
             socket={socket}
             user={user}
             idProduct={product_id}
