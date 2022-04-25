@@ -14,6 +14,7 @@ function ProductsType() {
     setLoading(true);
     const getProduct = async () => {
       const res = await products.getProducts();
+  
       setData(res.products);
       setLoading(false);
     };

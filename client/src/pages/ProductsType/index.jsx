@@ -8,9 +8,10 @@ import Loading from "pages/LoadingPage";
 import { useLocation } from "react-router-dom";
 import useCustomRouter from "hooks/useCustomRouter";
 import Sorting from "./sorting";
+import { set } from "lodash";
 function ProductsType() {
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(1);
+  const [limit, setLimit] = useState(4);
   const [sort, setSort] = useState("-createdAt");
   const [category, setCategory] = useState();
   const [loading, setLoading] = useState(false);
@@ -21,6 +22,7 @@ function ProductsType() {
     if (!data) return 0;
     return Math.ceil(data.count / limit);
   }, [data, limit]);
+  console.log(totalPages);
   const localtion = useLocation();
   const productService = new ProductService();
 
@@ -34,6 +36,7 @@ function ProductsType() {
     console.log(res);
     setData(res);
   };
+  console.log(data);
   useEffect(() => {
     setLoading(true);
     const page = new URLSearchParams(search).get("page") || 1;
@@ -124,7 +127,7 @@ function ProductsType() {
         <Pagination
           current={page}
           onChange={handleChangePage}
-          total={totalPages}
+          total={totalPages * 10}
         />
       </div>
     </>

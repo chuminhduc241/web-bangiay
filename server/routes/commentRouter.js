@@ -3,5 +3,5 @@ const commentCtrl = require("../controllers/commentCtrl");
 const auth = require("../middleware/auth");
 const authAdmin = require("../middleware/authAdmin");
 
-router.get("/getComments", commentCtrl.getComments);
+router.get("/getComments/:id", commentCtrl.getComments);
 module.exports = router;

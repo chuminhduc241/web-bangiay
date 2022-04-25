@@ -22,7 +22,7 @@ export default function Menu({ openMenu, setOpenMenu }) {
       setCategory(res);
     };
     getCategory();
-  });
+  }, []);
   return (
     <>
       <div className={`ground-menu ${openMenu && "open"}`}>
@@ -35,8 +35,12 @@ export default function Menu({ openMenu, setOpenMenu }) {
             </li>
             {category.length !== 0
               ? category.map((item) => (
-                  <li className="active-menu" style={{ "--i": "2" }}>
-                    <Link to={`/product-type/?Adidas`}>
+                  <li
+                    key={item._id}
+                    className="active-menu"
+                    style={{ "--i": "2" }}
+                  >
+                    <Link to={`/product-type/?category=${item.name}`}>
                       <div className="icon-menu">
                         <img src={item.image} alt="logoAdidas" />
                       </div>

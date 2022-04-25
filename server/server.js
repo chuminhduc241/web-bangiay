@@ -51,8 +51,8 @@ io.on("connection", (socket) => {
     // console.log(socket.adapter.rooms)
   });
   socket.on("createComment", async (msg) => {
-    const { id_user, content, id_product, createdAt, rating, send } = msg;
-
+    const { id_user, content, id_product, createdAt, rating, send, _id } = msg;
+    console.log(msg);
     const newComment = new Comments({
       id_user,
       content,
@@ -60,8 +60,26 @@ io.on("connection", (socket) => {
       createdAt,
       rating,
     });
-    await newComment.save();
-    io.to(newComment.id_product).emit("sendCommentToClient", newComment);
+    if (send === "replyComment") {
+      const { _id, id_user, content, id_product, createdAt, rating } = msg;
+      const comment = await Comments.findById(_id);
+      console.log(comment);
+      if (comment) {
+        comment.reply.push({ _id, id_user, content, createdAt, rating });
+        console.log("vao");
+        console.log(comment);
+        await comment.save();
+
+        io.to(comment.product_id).emit("sendReplyCommentToClient", comment);
+      }
+    } else {
+      await newComment.save();
+      const newcmt = await Comments.findById(newComment._id).populate(
+        "id_user"
+      );
+
+      io.to(newComment.id_product).emit("sendCommentToClient", newcmt);
+    }
   });
 
   socket.on("disconnect", () => {

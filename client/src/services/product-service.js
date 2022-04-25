@@ -6,7 +6,9 @@ export class ProductService extends ServiceBase {
     return await this.get("/getProducts");
   };
   getComments = async (params) => {
-    return await this.get("/getComments");
+    const { product_id, page, limit } = params;
+    const total = page * limit;
+    return await this.get(`/getComments/${product_id}?limit=${total}`);
   };
   getProductById = async (params) => {
     const { id } = params;
