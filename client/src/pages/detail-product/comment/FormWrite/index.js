@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import { Comment, Avatar, Form, Button, Input, Rate } from "antd";
+import { Comment, Avatar, Form, Button, Input, Rate, message } from "antd";
 import ImageDefault from "assets/images/avatar.png";
 import { useHistory } from "react-router-dom";
+import $ from "jquery";
 // --CSS
 import "./style.css";
 import { useSelector } from "react-redux";
@@ -12,23 +13,30 @@ export default function FormWrite({ product_id, socket, user }) {
   const { TextArea } = Input;
   const [form] = Form.useForm();
   const [isFormValid, setIsFormValid] = useState(true);
-  const [start, setStart] = useState(0);
+  const [star, setStar] = useState(0);
   const [content, setContent] = useState("");
 
   //function
   const createdAt = new Date().toISOString();
   const onFinish = (values) => {
-    console.log(values);
+    if (star === 0) {
+      message.error("Bạn chưa nhập đánh giá sao");
+      return;
+    }
     if (user) {
       socket.emit("createComment", {
         id_user: user._id,
         content: values.content,
         id_product: product_id,
-        rating: start,
+        rating: star,
       });
-      form.resetFields(["content"]);
-      setStart(0);
-      console.log("da tao comment");
+      form.resetFields();
+      setStar(0);
+      $("body,html").animate(
+        { scrollTop: $(".list-item-comment").offset().top - 140 },
+        1500
+      );
+      message.success("Thêm đánh giá thành công");
     }
   };
   // useEffect(() => {
@@ -60,7 +68,7 @@ export default function FormWrite({ product_id, socket, user }) {
     setContent(e.target.value);
   };
   const handleChange = (newRating) => {
-    setStart(newRating);
+    setStar(newRating);
   };
   // state
   const showIconImage = (image, data) => {
@@ -81,7 +89,7 @@ export default function FormWrite({ product_id, socket, user }) {
             <Avatar src={showIconImage(ImageDefault, user)} alt="Han Solo" />
           }
         >
-          <Rate onChange={handleChange} />
+          <Rate onChange={handleChange} value={star} />
           <div className="group-length-content">
             <p>{content.length}/700</p>
           </div>

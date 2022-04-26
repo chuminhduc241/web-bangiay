@@ -52,7 +52,6 @@ io.on("connection", (socket) => {
   });
   socket.on("createComment", async (msg) => {
     const { id_user, content, id_product, createdAt, rating, send, _id } = msg;
-    console.log(msg);
     const newComment = new Comments({
       id_user,
       content,
@@ -65,20 +64,21 @@ io.on("connection", (socket) => {
       const comment = await Comments.findById(_id);
       console.log(comment);
       if (comment) {
-        comment.reply.push({ _id, id_user, content, createdAt, rating });
-        console.log("vao");
+        comment.reply.push({ id_user, content, createdAt });
         console.log(comment);
         await comment.save();
-
-        io.to(comment.product_id).emit("sendReplyCommentToClient", comment);
+        const newcmt = await Comments.findById(comment._id)
+          .populate("id_user")
+          .populate("reply.id_user");
+        io.to(newcmt.id_product).emit("sendReplyCommentToClient", newcmt);
       }
     } else {
       await newComment.save();
-      const newcmt = await Comments.findById(newComment._id).populate(
-        "id_user"
-      );
-
-      io.to(newComment.id_product).emit("sendCommentToClient", newcmt);
+      const newcmt = await Comments.findById(newComment._id)
+        .populate("id_user")
+        .populate("reply.id_user");
+      console.log(newcmt);
+      io.to(newcmt.id_product).emit("sendCommentToClient", newcmt);
     }
   });
 

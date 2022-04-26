@@ -9,7 +9,13 @@ const newComment = mongoose.Schema(
       type: Number,
       default: 0,
     },
-    reply: { type: Array },
+    reply: [
+      {
+        id_user: { type: Schema.Types.ObjectId, ref: "user" },
+        content: { type: String },
+        createAt: { type: Date },
+      },
+    ],
     editComment: { type: Boolean, required: false },
   },
   { timeStamps: true }

@@ -42,6 +42,10 @@
 	width: 50px;
 	height: 50px;
 }
+.form_input p{
+	color: #242424;
+	font-size: 16px;
+}
 @media screen and (max-width: 1000px) {
 	.group-form-comment {
 		margin: 0 10px;

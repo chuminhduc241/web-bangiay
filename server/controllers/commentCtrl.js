@@ -22,7 +22,9 @@ const commentCtrl = {
   getComments: async (req, res) => {
     try {
       const features = new APIfeatures(
-        Comments.find({ id_product: req.params.id }).populate("id_user"),
+        Comments.find({ id_product: req.params.id })
+          .populate("id_user")
+          .populate("reply.id_user"),
         req.query
       )
         .sorting()
