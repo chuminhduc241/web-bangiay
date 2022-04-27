@@ -85,6 +85,33 @@ const productCtrl = {
       product,
     });
   },
+  reviews: async (req, res) => {
+    try {
+      const { ratings } = req.body;
+      console.log(ratings);
+      console.log(req.params.id);
+      if (ratings && ratings !== 0) {
+        const product = await Products.findById(req.params.id);
+        if (!product)
+          return res.status(400).json({ msg: "Product does not exist." });
+
+        let num = product.numOfReviews;
+        let rate = product.ratings;
+
+        await Products.findOneAndUpdate(
+          { _id: req.params.id },
+          {
+            ratings: rate + ratings,
+            numOfReviews: num + 1,
+          }
+        );
+
+        res.json({ msg: "Update success" });
+      }
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
   createProduct: async (req, res) => {
     try {
       const { name, description, price, sex, color, size, category } = req.body;

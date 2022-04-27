@@ -9,6 +9,7 @@ router.get("/refresh_token", userCtrl.refeshToken);
 router.post("/forgot", userCtrl.forgotPassword);
 router.post("/reset", auth, userCtrl.resetPassword);
 router.post("/update", auth, userCtrl.updateUser);
+router.post("/updatePassword", auth, userCtrl.updatePassword);
 router.post("/update_role/:id", auth, authAdmin, userCtrl.updateUsersRole);
 router.delete("/delete/:id", auth, authAdmin, userCtrl.deleteUser);
 router.get("/infor", auth, userCtrl.getInforUser);

@@ -6,6 +6,10 @@ export class UserServices extends ServiceBase {
     const { name, avatar } = params;
     return await this.post("/auth/update", { name, avatar });
   };
+  updatePassword = async (params) => {
+    const { password, newPassword } = params;
+    return await this.post("/auth/updatePassword", { password, newPassword });
+  };
   uploadAvatar = async (params) => {
     const { avatar } = params;
 

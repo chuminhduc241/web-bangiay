@@ -17,13 +17,14 @@ function FormInput({
 
   useEffect(() => {
     if (name) {
-      contentRef.current.innerHTML = `
-                <a href="#!"
-                    style="color: crimson;
-                    font-weight: 600;
-                    text-transform: capitalize;"
-                >${name}: </a>
-            `;
+      //   contentRef.current.innerHTML = `
+      //             <a href="#!"
+      //                 style="color: crimson;
+      //                 font-weight: 600;
+      //                 text-transform: capitalize;"
+      //             >${name}: </a>
+      //         `;
+      contentRef.current.focus();
     }
   }, [name]);
 

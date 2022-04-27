@@ -1,14 +1,11 @@
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import { useState } from "react";
-import { Select, Form, Button, Image, Rate } from "antd";
+import { Button, Image, Rate } from "antd";
 import Slider from "react-slick";
 import { addCart } from "redux/cartSlice";
-import imgFreeShip from "assets/images/freeship.png";
 import popup from "components/common/Popup";
 import { useDispatch } from "react-redux";
 import "./style.scss";
-const { Option } = Select;
-const formatter = new Intl.NumberFormat("vn");
 
 export default function InForProduct({ product }) {
   //state
@@ -169,7 +166,9 @@ export default function InForProduct({ product }) {
               <div className="group-product-infor">
                 Màu sắc:
                 {product?.color?.map((color) => (
-                  <span className="group-product-text">{color}</span>
+                  <span key={color} className="group-product-text">
+                    {color}
+                  </span>
                 ))}
               </div>
               <div className="group-product-infor">

@@ -2,23 +2,26 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
-import "./style.scss";
 import { ProductService } from "services/product-service";
 import { Rate } from "antd";
-import Loading from "pages/LoadingPage";
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
+import Loading1 from "pages/loading";
 function ProductsType() {
   const products = new ProductService();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { search } = useLocation();
+  const key = new URLSearchParams(search).get("query");
+  console.log(key);
   useEffect(() => {
     setLoading(true);
     const getProduct = async () => {
-      const res = await products.getProducts({ limit: 12 });
+      const res = await products.searchProducts({ limit: 100, name: key });
       setData(res.products);
       setLoading(false);
     };
     getProduct();
-  }, []);
+  }, [search]);
   const formatter = new Intl.NumberFormat("vn");
   const showReview = (rating, numReviews) => {
     const rate = rating / numReviews;
@@ -81,9 +84,16 @@ function ProductsType() {
   };
   return (
     <>
-      <div className="group-products-type">
-        <h3> DÀNH RIÊNG CHO BẠN</h3>
-        {loading && <Loading />}
+      <div className="group-products-type" style={{ minHeight: "500px" }}>
+        {data.length > 0 ? (
+          <h3>
+            Có {data.length} kết quả tìm kiếm cho '{key}'
+          </h3>
+        ) : (
+          <h3>Không tìm thấy kết quả cho '{key}'</h3>
+        )}
+
+        {loading && <Loading1 />}
         {!loading && ShowProducts()}
       </div>
     </>

@@ -17,11 +17,12 @@ import { Link } from "react-router-dom";
 import { getUser, logOut } from "redux/authSlice";
 import { UserServices } from "services/user-service";
 import "./style.scss";
+import UpdatePassword from "./UpdatePassword";
 import UploadImage from "./UploadImage";
 moment.locale("vi");
 const InforUser = () => {
   const [form] = Form.useForm();
-  const [isFormValid, setIsFormValid] = useState(true);
+
   const [visible, setVisible] = useState(false);
   const [isNameUpdate, setIsNameUpdate] = useState(false);
   const [isInformation, setIsInformation] = useState(false);
@@ -182,6 +183,12 @@ const InforUser = () => {
           </Drawer>
         </div>
       </div>
+      {isInformation && (
+        <UpdatePassword
+          isInformation={isInformation}
+          setIsInformation={setIsInformation}
+        />
+      )}
     </>
   );
 };

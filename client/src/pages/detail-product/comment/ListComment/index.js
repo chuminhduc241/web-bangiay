@@ -1,10 +1,11 @@
+import { Spin } from "antd";
+import Loading from "pages/LoadingPage";
 import { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ProductService } from "services/product-service";
 import CommentItem from "./CommentItem";
 import "./style.scss";
 export default function ListComment({ socket, user, product_id }) {
-  const history = useHistory();
   const [idComment, setIdComment] = useState("");
   const [replyComment, setReplyComment] = useState(false);
   const [isForm, setIsForm] = useState(false);
@@ -58,19 +59,19 @@ export default function ListComment({ socket, user, product_id }) {
       return () => socket.off("sendReplyCommentToClient");
     }
   }, [socket, dataComment]);
-  // useEffect(() => {
-  //   const observer = new IntersectionObserver(
-  //     (entries) => {
-  //       if (entries[0].isIntersecting) {
-  //         setPage((pre) => pre + 1);
-  //       }
-  //     },
-  //     {
-  //       threshold: 1,
-  //     }
-  //   );
-  //   observer.observe(pageEnd.current);
-  // }, []);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setPage((pre) => pre + 1);
+        }
+      },
+      {
+        threshold: 1,
+      }
+    );
+    observer.observe(pageEnd.current);
+  }, []);
   return (
     <div className="list-item-comment">
       <p
@@ -93,10 +94,10 @@ export default function ListComment({ socket, user, product_id }) {
           product_id={product_id}
         />
       ))}
-      {/* {loading && <Loading />}
+      {loading && <Spin />}
       <button style={{ opacity: 0 }} ref={pageEnd}>
         load more
-      </button> */}
+      </button>
     </div>
   );
 }

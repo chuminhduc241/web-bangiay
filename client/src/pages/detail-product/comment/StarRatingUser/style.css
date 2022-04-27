@@ -1,7 +1,7 @@
 .ground-start-rating {
 	padding: 20px;
 	border: 1px solid rgba(0, 0, 0, 0.15);
-	background: #ffff;
+	background-color: #fff;
 	border-radius: 8px;
 	margin: 20px 0;
 }
@@ -45,6 +45,7 @@
 .main-start-rating .items-start-rating .control-start {
 	display: flex;
 	justify-self: center;
+	align-items: center;
 }
 .main-start-rating .items-start-rating .control-start p {
 	margin-right: 5px;
@@ -83,4 +84,7 @@
 	.ground-start-rating .main-start-rating .control-start-rating {
 		border-right: none;
 	}
+}
+.ant-rate-star-zero{
+	display: none;
 }

@@ -5,20 +5,19 @@ import { useHistory } from "react-router-dom";
 import $ from "jquery";
 // --CSS
 import "./style.css";
-import { useSelector } from "react-redux";
+import { ProductService } from "services/product-service";
 
 export default function FormWrite({ product_id, socket, user }) {
   // create State
   const history = useHistory();
   const { TextArea } = Input;
   const [form] = Form.useForm();
-  const [isFormValid, setIsFormValid] = useState(true);
   const [star, setStar] = useState(0);
   const [content, setContent] = useState("");
-
+  const productService = new ProductService();
   //function
-  const createdAt = new Date().toISOString();
-  const onFinish = (values) => {
+
+  const onFinish = async (values) => {
     if (star === 0) {
       message.error("Bạn chưa nhập đánh giá sao");
       return;
@@ -30,6 +29,7 @@ export default function FormWrite({ product_id, socket, user }) {
         id_product: product_id,
         rating: star,
       });
+      await productService.updatereview({ id: product_id, ratings: star });
       form.resetFields();
       setStar(0);
       $("body,html").animate(

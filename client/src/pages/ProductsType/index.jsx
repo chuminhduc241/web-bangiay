@@ -9,6 +9,7 @@ import { useLocation } from "react-router-dom";
 import useCustomRouter from "hooks/useCustomRouter";
 import Sorting from "./sorting";
 import { set } from "lodash";
+import ReactPaginate from "react-paginate";
 function ProductsType() {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(4);
@@ -112,20 +113,22 @@ function ProductsType() {
   return (
     <>
       <div className="group-products-type">
-        <div>{category}</div>
-        <div className="filter-price col l-6">
-          <Sorting
-            sort={sort}
-            category={category}
-            calback={(sort, category) =>
-              pushQuery({ page, sort, limit, category })
-            }
-          />
+        <div className="group-products-header">
+          <div className="category1">{category}</div>
+          <div className="filter-price">
+            <Sorting
+              sort={sort}
+              category={category}
+              calback={(sort, category) =>
+                pushQuery({ page, sort, limit, category })
+              }
+            />
+          </div>
         </div>
         {loading && <Loading />}
         {!loading && ShowProducts(data)}
         <Pagination
-          current={page}
+          Current={page}
           onChange={handleChangePage}
           total={totalPages * 10}
         />

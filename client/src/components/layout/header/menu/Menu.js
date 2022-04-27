@@ -52,7 +52,6 @@ export default function Menu({ openMenu, setOpenMenu }) {
               : ""}
           </ul>
         </nav>
-        );
       </div>
       {openMenu && <div className="active-before" onClick={onClickCloseMenu} />}
     </>

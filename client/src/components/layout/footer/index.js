@@ -62,54 +62,26 @@ export default function Footer() {
               <h3>KẾT NỐI VỚI CHÚNG TÔI</h3>
               <ul>
                 <li>
-                  <a
-                    href="https://www.facebook.com/PhuocKaito1410"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
+                  <a href="/" target="_blank" rel="noreferrer noopener">
                     <i className="fa fa-facebook" />
                   </a>
                 </li>
                 <li>
-                  <a
-                    href="https://www.linkedin.com/in/phuockaito"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
+                  <a href="/" target="_blank" rel="noreferrer noopener">
                     <i className="fa fa-linkedin" />
                   </a>
                 </li>
                 <li>
-                  <a
-                    href="https://github.com/phuockaito"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
-                    <i class="fa fa-github" />{" "}
+                  <a href="/" target="_blank" rel="noreferrer noopener">
+                    <i className="fa fa-github" />{" "}
                   </a>
                 </li>
                 <li>
-                  <a
-                    href="http://kaitomovie.cf/"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
+                  <a href="/" target="_blank" rel="noreferrer noopener">
                     <i className="fa fa-external-link" />
                   </a>
                 </li>
               </ul>
-              <div className="user-online">
-                <p>
-                  <UserOutlined />
-                </p>
-                <p>
-                  <EyeOutlined />
-                  lượt xem
-                </p>
-                <p style={{ fontSize: "16px" }}>
-                  Cập nhật mới nhất: 17/06/2021
-                </p>
-              </div>
             </div>
           </div>
         </div>

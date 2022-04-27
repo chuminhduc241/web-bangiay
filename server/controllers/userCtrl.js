@@ -137,7 +137,7 @@ const userCtrl = {
         { _id: req.user.id },
         { password: passwordHash }
       );
-      res.json({ msg: "password successfully changed!" });
+      res.json({ msg: "Đặt lại mật khẩu thành công !" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
@@ -176,6 +176,33 @@ const userCtrl = {
         }
       );
       res.json({ msg: "Updated Successfully" });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+  updatePassword: async (req, res) => {
+    try {
+      const { password, newPassword } = req.body;
+      const user = await User.findById(req.user.id);
+
+      const check = await bcrypt.compare(password, user.password);
+      if (check) {
+        const passwordHash = await bcrypt.hash(newPassword, 12);
+        await User.findOneAndUpdate(
+          { _id: req.user.id },
+          {
+            password: passwordHash,
+          }
+        );
+        return res.status(200).json({
+          msg: "Mật khẩu đã được thay đổi thành công",
+          status: "success",
+        });
+      } else {
+        return res
+          .status(200)
+          .json({ msg: "Mật khẩu cũ không chính xác", success: "error" });
+      }
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }

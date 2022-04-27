@@ -40,7 +40,7 @@ const UploadImage = ({ avatar, name, callBackAvatar }) => {
       setImage(data);
       setLoading(true);
       const getUrl = async () => {
-        const res = await userServices.uploadAvatar({ avatar: image });
+        const res = await userServices.uploadAvatar({ avatar: data });
         await userServices.updateUser({ name, avatar: res.url });
         setLoading(false);
       };

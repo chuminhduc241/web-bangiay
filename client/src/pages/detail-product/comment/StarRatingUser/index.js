@@ -4,20 +4,17 @@ import "./style.css";
 export default function StarRatingUser() {
   return (
     <div className="ground-start-rating">
-      <h3>
-        {1} Đánh giá {"duc"}
-      </h3>
       <div className="main-start-rating">
         <div className="start-rating">
           <h3>Đánh Giá Trung Bình</h3>
           <p>{6}/5</p>
-          <Rate value={1} />
+          <Rate value={1} disabled />
         </div>
         <div className="control-start-rating">
           <div className="items-start-rating">
             <div className="control-start">
               <p>1</p>
-              <Rate value={1} />
+              <Rate value={1} disabled />
             </div>
             <Progress
               percent={((1 / 10) * 100).toFixed(1)}
@@ -35,7 +32,7 @@ export default function StarRatingUser() {
           <div className="items-start-rating">
             <div className="control-start">
               <p>2</p>
-              <Rate value={1} />
+              <Rate value={1} disabled />
             </div>
             <Progress
               percent={((1 / 10) * 100).toFixed(1)}
@@ -53,7 +50,7 @@ export default function StarRatingUser() {
           <div className="items-start-rating">
             <div className="control-start">
               <p>3</p>
-              <Rate value={1} />
+              <Rate value={1} disabled />
             </div>
             <Progress
               percent={((1 / 10) * 100).toFixed(1)}
@@ -71,7 +68,7 @@ export default function StarRatingUser() {
           <div className="items-start-rating">
             <div className="control-start">
               <p>4</p>
-              <Rate value={1} />
+              <Rate value={1} disabled />
             </div>
             <Progress
               percent={((1 / 10) * 100).toFixed(1)}
@@ -89,7 +86,7 @@ export default function StarRatingUser() {
           <div className="items-start-rating">
             <div className="control-start">
               <p>5</p>
-              <Rate value={1} />
+              <Rate value={1} disabled />
             </div>
             <Progress
               percent={((1 / 10) * 100).toFixed(1)}
